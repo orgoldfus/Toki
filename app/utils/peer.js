@@ -17,7 +17,9 @@ export default class Connector {
   }
 
   connectToPeer(peerId) {
+    console.log(`connecting to ${peerId}`);
     const conn = this.peer.connect(peerId);
+    console.log('connect was invoked');
 
     conn.on('open', () => {
       console.log(`connection to peer ${peerId} is now open`);
