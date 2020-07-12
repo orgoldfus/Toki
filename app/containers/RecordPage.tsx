@@ -15,8 +15,12 @@ export default function RecordPage() {
       const recorderInstance = await getRecorder();
       setRecorder(recorderInstance);
     }
+
     createRecorder();
-  }, [recorder]);
+    if (connection) return;
+    const connectionInstance = new Connection(handleMessageReceived);
+    setConnection(connectionInstance);
+  }, [recorder, connection]);
 
   const handleMessageReceived = (data) => {
     const url = URL.createObjectURL(data);
@@ -25,9 +29,7 @@ export default function RecordPage() {
   };
 
   const handleConnectPeer = (peerId) => {
-    const conn = new Connection(handleMessageReceived);
-    conn.connectToPeer(peerId);
-    setConnection(conn);
+    connection.connectToPeer(peerId);
   };
 
   const handleRecord = () => {
@@ -39,14 +41,14 @@ export default function RecordPage() {
     await recorder.stopRecording();
     const blob = await recorder.getBlob();
     connection.sendToPeer(blob);
-    // const url = URL.createObjectURL(blob);
-    // audio.src = url;
-    // audio.play();
     setIsRecording(false);
   };
 
+  console.log('^^^render^^^', connection && connection.peer.id);
+
   return (
     <ConnectPeer
+      connectionId={connection && connection.peer.id}
       isPeerConnected={!!connection}
       isRecording={isRecording}
       onConnectPeer={handleConnectPeer}

@@ -2,7 +2,11 @@ import Peer from 'peerjs';
 
 export default class Connector {
   constructor(messageHandler) {
-    this.peer = new Peer();
+    this.peer = new Peer({
+      host: 'peerjs-server.herokuapp.com',
+      secure: true,
+      port: 443,
+    });
     this.messageHandler = messageHandler;
     // this.connections = []
 

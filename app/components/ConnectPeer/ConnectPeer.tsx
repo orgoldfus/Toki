@@ -4,6 +4,7 @@ import routes from '../../constants/routes.json';
 import styles from './ConnectPeer.css';
 
 export default function ConnectPeer({
+  connectionId,
   isPeerConnected,
   isRecording,
   onConnectPeer,
@@ -12,6 +13,7 @@ export default function ConnectPeer({
 }) {
   return (
     <div className={styles.container}>
+      <p>{`Connection ID: ${connectionId}`}</p>
       {!isPeerConnected && (
         <div>
           <input />
