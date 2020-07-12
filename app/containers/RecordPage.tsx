@@ -49,7 +49,7 @@ export default function RecordPage() {
   return (
     <ConnectPeer
       connectionId={connection && connection.peer.id}
-      isPeerConnected={!!connection}
+      isPeerConnected={connection && connection.connection}
       isRecording={isRecording}
       onConnectPeer={handleConnectPeer}
       onRecord={handleRecord}
